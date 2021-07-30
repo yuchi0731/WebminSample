@@ -20,8 +20,6 @@ namespace AccountingNote_Auth
             else
                 return true;
             
-
-
         }
     }
 }
