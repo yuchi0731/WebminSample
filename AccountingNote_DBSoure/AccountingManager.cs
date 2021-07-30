@@ -180,23 +180,19 @@ namespace AccountingNote_DBSoure
                 
                  ";
 
-            //connect db & execute
-            using (SqlConnection conn = new SqlConnection(connStr))
-            {
-                using (SqlCommand comm = new SqlCommand(dbcommand, conn))
-                {
-                    comm.Parameters.AddWithValue("@id", ID);
-                    comm.Parameters.AddWithValue("@userID", userID);
-                    comm.Parameters.AddWithValue("@caption", caption);
-                    comm.Parameters.AddWithValue("@amount", amount);
-                    comm.Parameters.AddWithValue("@actType", actType);
-                    comm.Parameters.AddWithValue("@createDate", DateTime.Now);
-                    comm.Parameters.AddWithValue("@body", body);
+            List<SqlParameter> paramlist = new List<SqlParameter>();
+            paramlist.Add(new SqlParameter("@id", ID));
+            paramlist.Add(new SqlParameter("@userID", userID));
+            paramlist.Add(new SqlParameter("@caption", caption));
+            paramlist.Add(new SqlParameter("@amount", amount));
+            paramlist.Add(new SqlParameter("@actType", actType));
+            paramlist.Add(new SqlParameter("@createDate", DateTime.Now));
+            paramlist.Add(new SqlParameter("@body", body));
 
+   
                     try
-                    {
-                        conn.Open();
-                        int effectRows = comm.ExecuteNonQuery();
+                    {                       
+                        int effectRows = DBHelper.ModifyData(connStr, dbcommand, paramlist);
 
                         if (effectRows == 1)
                             return true;
@@ -211,10 +207,6 @@ namespace AccountingNote_DBSoure
                     }
 
 
-                }
-
-
-            }
 
 
         }
@@ -227,27 +219,25 @@ namespace AccountingNote_DBSoure
                 WHERE ID = @id
                 ";
 
-            //connect db & execute
-            using (SqlConnection conn = new SqlConnection(connStr))
+            List<SqlParameter> paramlist = new List<SqlParameter>();
+            paramlist.Add(new SqlParameter("@id", ID));
+
+
+
+            try
             {
-                using (SqlCommand comm = new SqlCommand(dbcommand, conn))
-                {
-                    comm.Parameters.AddWithValue("@id", ID);
+                DBHelper.ModifyData(connStr, dbcommand, paramlist);
 
-
-                    try
-                    {
-                        conn.Open();
-                        comm.ExecuteNonQuery();
-                    }
-
-                    catch (Exception ex)
-                    {
-                        Logger.WriteLog(ex);
-                    }
-                }
             }
+
+            catch (Exception ex)
+            {
+                Logger.WriteLog(ex);
+            }
+
+           
         }
+
 
     }
 }

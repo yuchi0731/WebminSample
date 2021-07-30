@@ -62,5 +62,19 @@ namespace AccountingNote_DBSoure
             }
         }
 
+
+        public static int ModifyData(string connStr, string dbcommand, List<SqlParameter> paramlist)
+        {
+            using (SqlConnection conn = new SqlConnection(connStr))
+            {
+                using (SqlCommand comm = new SqlCommand(dbcommand, conn))
+                {
+                    comm.Parameters.AddRange(paramlist.ToArray());
+                    conn.Open();
+                    int effectRowsCount = comm.ExecuteNonQuery();
+                    return effectRowsCount;
+                }
+            }
+        }
     }
 }
