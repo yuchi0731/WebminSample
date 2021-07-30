@@ -24,25 +24,24 @@ namespace _0728_1.SystemAdmin
                     return;
                 }
 
-                string account = this.Session["UserLoginInfo"] as string;
-                DataRow dr = UserInfoManager.GetUserInfoByAccount(account);
+                //取得現在使用者是誰
+                var currentUser = AuthManager.GetCurrentUser();
 
-                if (dr == null) //如果帳號不存在，導向登入頁
-                {
-                    this.Session["UserLoginInfo"] = null;
+                if (currentUser == null) //如果帳號不存在，導向登入頁
+                {                  
                     Response.Redirect("/Login.aspx");
                     return;
                 }
 
-                this.ltAccount.Text = dr["Account"].ToString();
-                this.ltName.Text = dr["Name"].ToString();
-                this.ltEmail.Text = dr["Email"].ToString();
+                this.ltAccount.Text = currentUser.Account;
+                this.ltName.Text = currentUser.Name;
+                this.ltEmail.Text = currentUser.Email;
             }
         }
 
         protected void btnLogout_Click(object sender, EventArgs e)
         {
-            this.Session["UserLoginInfo"] = null; //清除登入資料，導向登入頁
+            AuthManager.Logout();//資訊清除，導向登入頁
             Response.Redirect("/Login.aspx");
         }
     }

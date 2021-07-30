@@ -19,11 +19,9 @@ namespace _0728_1.SystemAdmin
                 Response.Redirect("/Login.aspx");
                 return;
             }
+            var currentUser = AuthManager.GetCurrentUser();
 
-            string account = this.Session["UserLoginInfo"] as string;
-            var drUserInfo = UserInfoManager.GetUserInfoByAccount(account);
-
-            if (drUserInfo == null)
+            if (currentUser == null) //如果帳號不存在，導向登入頁
             {
                 Response.Redirect("/Login.aspx");
                 return;
@@ -44,7 +42,7 @@ namespace _0728_1.SystemAdmin
                     int id;
                     if (int.TryParse(idText, out id))//檢查能不能轉型成數字
                     {
-                        var drAccounting = AccountingManager.GetAccounting(id, drUserInfo["ID"].ToString()); //查id有沒有//並多加一項目確認是否為自己資料而不會窺看得以別的使用者資料
+                        var drAccounting = AccountingManager.GetAccounting(id, currentUser.ID); //查id有沒有//並多加一項目確認是否為自己資料而不會窺看得以別的使用者資料
 
                         if (drAccounting == null)
                         {
@@ -91,17 +89,14 @@ namespace _0728_1.SystemAdmin
                 return;
             }
 
-            string account = this.Session["UserLoginInfo"] as string;
-            var dr = UserInfoManager.GetUserInfoByAccount(account);
-
-            if (dr == null)
+            UserInfoModel currentUsser = AuthManager.GetCurrentUser();
+            if (currentUsser == null)
             {
                 Response.Redirect("/Login.aspx");
-                return;
             }
 
 
-            string userID = dr["ID"].ToString();
+            string userID = currentUsser.ID;
             string caption = this.txtCaption.Text;
             string amountText = this.txtAmount.Text;
             string actTypeText = this.ddlActType.SelectedValue;
