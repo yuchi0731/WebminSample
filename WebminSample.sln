@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31410.357
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AccountingNote_DBSoure", "0728AccountingNote_DBSoure\AccountingNote_DBSoure.csproj", "{C7F6F54B-8D4F-4E81-BD83-B0C4BC13678D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AccountingNote", "0728AccountingNote\AccountingNote.csproj", "{C6B2A2B9-B5A2-4392-98E6-8CF7A344190A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C7F6F54B-8D4F-4E81-BD83-B0C4BC13678D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C7F6F54B-8D4F-4E81-BD83-B0C4BC13678D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C7F6F54B-8D4F-4E81-BD83-B0C4BC13678D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C7F6F54B-8D4F-4E81-BD83-B0C4BC13678D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C6B2A2B9-B5A2-4392-98E6-8CF7A344190A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C6B2A2B9-B5A2-4392-98E6-8CF7A344190A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C6B2A2B9-B5A2-4392-98E6-8CF7A344190A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C6B2A2B9-B5A2-4392-98E6-8CF7A344190A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {AEEC3A2A-59C0-42CC-B450-CC9CB0C540B2}
+	EndGlobalSection
+EndGlobal
