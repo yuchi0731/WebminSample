@@ -119,40 +119,31 @@ namespace AccountingNote_DBSoure
                 )
                 ";
 
+            List<SqlParameter> createlist = new List<SqlParameter>();
+            createlist.Add(new SqlParameter("@userID", userID));
+            createlist.Add(new SqlParameter("@caption", caption));
+            createlist.Add(new SqlParameter("@amount", amount));
+            createlist.Add(new SqlParameter("@actType", actType));
+            createlist.Add(new SqlParameter("@createDate", DateTime.Now));
+            createlist.Add(new SqlParameter("@body", body));
 
-            //connect db & execute
-            using (SqlConnection conn = new SqlConnection(connStr))
+            try
             {
-                using (SqlCommand comm = new SqlCommand(dbcommand, conn))
-                {
-                    comm.Parameters.AddWithValue("@userID", userID);
-                    comm.Parameters.AddWithValue("@caption", caption);
-                    comm.Parameters.AddWithValue("@amount", amount);
-                    comm.Parameters.AddWithValue("@actType", actType);
-                    comm.Parameters.AddWithValue("@createDate", DateTime.Now);
-                    comm.Parameters.AddWithValue("@body", body);
-
-                    try
-                    {
-                        conn.Open();
-                        comm.ExecuteNonQuery();
-
-                        //此方法不需要回傳結果
-                    }
-
-                    catch (Exception ex)
-                    {
-                        Logger.WriteLog(ex);
-                    }
-
-
-                }
-
-
+               DBHelper.CreatData(connStr, dbcommand, createlist);
+                return;
+                //此方法不需要回傳結果
             }
 
+            catch (Exception ex)
+            {
+                Logger.WriteLog(ex);
+                return;
+            }
+
+            
 
         }
+
 
 
         public static bool UpdateAccounting(int ID, string userID, string caption, int amount, int actType, string body)

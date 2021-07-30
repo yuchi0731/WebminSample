@@ -76,5 +76,26 @@ namespace AccountingNote_DBSoure
                 }
             }
         }
+
+
+
+        public static void CreatData(string connStr, string dbcommand, List<SqlParameter> createlist)
+        {
+
+            //connect db & execute
+            using (SqlConnection conn = new SqlConnection(connStr))
+            {
+                using (SqlCommand comm = new SqlCommand(dbcommand, conn))
+                {
+                   
+                    comm.Parameters.AddRange(createlist.ToArray());
+                    conn.Open();
+                    comm.ExecuteNonQuery();
+
+                }
+
+
+            }
+        }
     }
 }
