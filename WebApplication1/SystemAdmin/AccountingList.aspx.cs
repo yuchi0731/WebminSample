@@ -14,6 +14,9 @@ namespace _0728_1.SystemAdmin
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+
+
+
             //check logined
             if (this.Session["UserLoginInfo"] == null)
             {
@@ -85,5 +88,10 @@ namespace _0728_1.SystemAdmin
                 }
             }
         }
+
+
+
+
+
     }
 }
