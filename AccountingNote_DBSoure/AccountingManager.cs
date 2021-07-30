@@ -130,14 +130,14 @@ namespace AccountingNote_DBSoure
             try
             {
                DBHelper.CreatData(connStr, dbcommand, createlist);
-                return;
+                
                 //此方法不需要回傳結果
             }
 
             catch (Exception ex)
             {
                 Logger.WriteLog(ex);
-                return;
+                
             }
 
             
