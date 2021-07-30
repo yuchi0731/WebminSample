@@ -1,4 +1,5 @@
-﻿using AccountingNote_DBSoure;
+﻿using AccountingNote_Auth;
+using AccountingNote_DBSoure;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -17,7 +18,7 @@ namespace _0728_1.SystemAdmin
         {
             if (!this.IsPostBack) //可能是按按鈕跳回本頁，所以要判斷Postback
             {
-                if (this.Session["UserLoginInfo"] == null) //如果尚未登入，導向登入頁
+                if (!AuthManager.IsLogined())
                 {
                     Response.Redirect("/Login.aspx");
                     return;

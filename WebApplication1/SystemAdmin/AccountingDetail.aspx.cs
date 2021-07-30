@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using AccountingNote_Auth;
 using AccountingNote_DBSoure;
 
 namespace _0728_1.SystemAdmin
@@ -13,7 +14,7 @@ namespace _0728_1.SystemAdmin
         protected void Page_Load(object sender, EventArgs e)
         {
             //check logined
-            if (this.Session["UserLoginInfo"] == null)
+            if (!AuthManager.IsLogined())
             {
                 Response.Redirect("/Login.aspx");
                 return;
