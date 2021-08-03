@@ -79,7 +79,5 @@ namespace AccountingNote_DBSoure
             //}
         }
 
-
-
     }
 }

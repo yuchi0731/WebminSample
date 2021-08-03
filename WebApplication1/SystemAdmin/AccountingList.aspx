@@ -1,5 +1,8 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="AccountingList.aspx.cs" Inherits="_0728_1.SystemAdmin.AccountingList" %>
 
+<%@ Register Src="~/UserControls/ucPager.ascx" TagPrefix="uc1" TagName="ucPager" %>
+
+
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -26,7 +29,7 @@
                     <!--如果沒有資料要有目前尚未有資料的提示訊息-->
                     <asp:Button ID="btnCreate" runat="server" Text="Add Accounting" OnClick="btnCreate_Click" />
                     <br/>
-                    <asp:GridView ID="gvAccountingList" runat="server" AutoGenerateColumns="False" OnRowDataBound="gvAccountingList_RowDataBound">
+                    <asp:GridView ID="gvAccountingList" runat="server" AutoGenerateColumns="False" OnRowDataBound="gvAccountingList_RowDataBound" BackColor="White" BorderColor="#CCCCCC" BorderStyle="None" BorderWidth="1px" CellPadding="3">
                         <Columns>
                             <asp:BoundField DataField="Caption" HeaderText="標題" />
                             <asp:BoundField DataField="Amount" HeaderText="金額" />          
@@ -46,13 +49,25 @@
                                 </ItemTemplate>
                             </asp:TemplateField>                    
                         </Columns>
+                        <FooterStyle BackColor="White" ForeColor="#000066" />
+                        <HeaderStyle BackColor="#006699" Font-Bold="True" ForeColor="White" />
+                        <PagerStyle BackColor="White" ForeColor="#000066" HorizontalAlign="Left" />
+                        <RowStyle ForeColor="#000066" />
+                        <SelectedRowStyle BackColor="#669999" Font-Bold="True" ForeColor="White" />
+                        <SortedAscendingCellStyle BackColor="#F1F1F1" />
+                        <SortedAscendingHeaderStyle BackColor="#007DBB" />
+                        <SortedDescendingCellStyle BackColor="#CAC9C9" />
+                        <SortedDescendingHeaderStyle BackColor="#00547E" />
                     </asp:GridView>
+
+                      <uc1:ucPager runat="server" id="ucPager" PageSize="10" CrrentPage="1" TotalSize="10" Url="AccountingList.aspx" />
+
                     <asp:PlaceHolder ID="plcNoData" runat="server" Visible="false">
                         <p style="color:red">
                             No data in your Accounting Note.
                         </p>
-                    </asp:PlaceHolder>
-
+                    </asp:PlaceHolder>                    
+                  
                 </td>
             </tr>
 

@@ -27,6 +27,7 @@ namespace _0728_1.SystemAdmin
 
             if (currentUser == null) //如果帳號不存在，導向登入頁
             {
+                this.Session["UserLoginInfo"] = null;
                 Response.Redirect("/Login.aspx");
                 return;
             }
@@ -37,8 +38,14 @@ namespace _0728_1.SystemAdmin
 
             if (dt.Rows.Count > 0) //check is empty data (大於0就做資料繫結)
             {
-                this.gvAccountingList.DataSource = dt;
+                
+                var dtPaged = this.GetPagedDataTable(dt);
+
+                this.gvAccountingList.DataSource = dtPaged;
                 this.gvAccountingList.DataBind();
+
+                this.ucPager.TotalSize = dt.Rows.Count;
+                this.ucPager.Bind();
             }
             else
             {
@@ -48,6 +55,53 @@ namespace _0728_1.SystemAdmin
 
 
         }
+
+
+
+        private int GetCurrentPage()
+        {
+            string pageText = Request.QueryString["Page"];
+
+            if (string.IsNullOrWhiteSpace(pageText))
+                return 1;
+
+            int intPage;
+            if (!int.TryParse(pageText, out intPage))
+                return 1;
+
+            if (intPage <= 0)
+                return 1;
+
+            return intPage;
+        }
+
+        private DataTable GetPagedDataTable(DataTable dt)
+        {
+            DataTable dtPaged = dt.Clone();
+
+            int startIndex = (this.GetCurrentPage() - 1) * 10;
+            int endIndex = (this.GetCurrentPage()) * 10;
+
+            if (endIndex > dt.Rows.Count)
+                endIndex = dt.Rows.Count;
+
+            for (var i = startIndex; i < endIndex; i++)
+            {
+                DataRow dr = dt.Rows[i];
+                var drNew = dtPaged.NewRow();
+
+                foreach (DataColumn dc in dt.Columns)
+                {
+                    drNew[dc.ColumnName] = dr[dc];
+                }
+
+                dtPaged.Rows.Add(drNew);
+            }
+
+            return dtPaged;
+        }
+
+
 
         protected void btnCreate_Click(object sender, EventArgs e)
         {
