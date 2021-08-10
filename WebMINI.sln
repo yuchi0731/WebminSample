@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AccountingNote_Auth", "Acco
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ucControl", "0803-ucControl\ucControl.csproj", "{9B3E2399-FE33-4A6F-8DC1-77EEF7E903DC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApplication2", "WebApplication2\WebApplication2.csproj", "{E737F4C7-F416-40B5-BE9C-8F71C63DDECC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{9B3E2399-FE33-4A6F-8DC1-77EEF7E903DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9B3E2399-FE33-4A6F-8DC1-77EEF7E903DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9B3E2399-FE33-4A6F-8DC1-77EEF7E903DC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E737F4C7-F416-40B5-BE9C-8F71C63DDECC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E737F4C7-F416-40B5-BE9C-8F71C63DDECC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E737F4C7-F416-40B5-BE9C-8F71C63DDECC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E737F4C7-F416-40B5-BE9C-8F71C63DDECC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

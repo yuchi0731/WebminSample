@@ -89,14 +89,14 @@ namespace _0728_1.SystemAdmin
                 return;
             }
 
-            UserInfoModel currentUsser = AuthManager.GetCurrentUser();
-            if (currentUsser == null)
+            UserInfoModel currentUser = AuthManager.GetCurrentUser();
+            if (currentUser == null)
             {
                 Response.Redirect("/Login.aspx");
             }
 
 
-            string userID = currentUsser.ID;
+            string userID = currentUser.ID;
             string caption = this.txtCaption.Text;
             string amountText = this.txtAmount.Text;
             string actTypeText = this.ddlActType.SelectedValue;

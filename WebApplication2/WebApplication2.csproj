@@ -7,12 +7,12 @@
     <ProductVersion>
     </ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{E84DCA24-ED3A-4546-80A7-4E832ABE04FC}</ProjectGuid>
+    <ProjectGuid>{E737F4C7-F416-40B5-BE9C-8F71C63DDECC}</ProjectGuid>
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>WebApplication1</RootNamespace>
-    <AssemblyName>WebApplication1</AssemblyName>
+    <RootNamespace>WebApplication2</RootNamespace>
+    <AssemblyName>WebApplication2</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
@@ -44,6 +44,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationFramework" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -69,22 +73,16 @@
   <ItemGroup>
     <Content Include="Default.aspx" />
     <Content Include="Global.asax" />
-    <Content Include="Login.aspx" />
-    <Content Include="SystemAdmin\AccountingDetail.aspx" />
-    <Content Include="SystemAdmin\AccountingList.aspx" />
-    <Content Include="SystemAdmin\UserInfo.aspx" />
-    <Content Include="UserControls\ucPager.ascx" />
-    <Content Include="UserControls\ucPager2.ascx" />
+    <Content Include="script\jQuery3.6.0.js" />
+    <Content Include="script\WebForm1.js" />
+    <Content Include="TryJQuery.aspx" />
+    <Content Include="TryJquery2.aspx" />
     <Content Include="Web.config" />
+    <Content Include="WebForm1.aspx" />
+    <Content Include="WebForm2.aspx" />
+    <Content Include="WebFormASJS.aspx" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Admin.Master.cs">
-      <DependentUpon>Admin.Master</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Admin.Master.designer.cs">
-      <DependentUpon>Admin.Master</DependentUpon>
-    </Compile>
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -95,52 +93,44 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Login.aspx.cs">
-      <DependentUpon>Login.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Login.aspx.designer.cs">
-      <DependentUpon>Login.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SystemAdmin\AccountingDetail.aspx.cs">
-      <DependentUpon>AccountingDetail.aspx</DependentUpon>
+    <Compile Include="TryJQuery.aspx.cs">
+      <DependentUpon>TryJQuery.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="SystemAdmin\AccountingDetail.aspx.designer.cs">
-      <DependentUpon>AccountingDetail.aspx</DependentUpon>
+    <Compile Include="TryJQuery.aspx.designer.cs">
+      <DependentUpon>TryJQuery.aspx</DependentUpon>
     </Compile>
-    <Compile Include="SystemAdmin\AccountingList.aspx.cs">
-      <DependentUpon>AccountingList.aspx</DependentUpon>
+    <Compile Include="TryJquery2.aspx.cs">
+      <DependentUpon>TryJquery2.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="SystemAdmin\AccountingList.aspx.designer.cs">
-      <DependentUpon>AccountingList.aspx</DependentUpon>
+    <Compile Include="TryJquery2.aspx.designer.cs">
+      <DependentUpon>TryJquery2.aspx</DependentUpon>
     </Compile>
-    <Compile Include="SystemAdmin\UserInfo.aspx.cs">
-      <DependentUpon>UserInfo.aspx</DependentUpon>
+    <Compile Include="WebForm1.aspx.cs">
+      <DependentUpon>WebForm1.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="SystemAdmin\UserInfo.aspx.designer.cs">
-      <DependentUpon>UserInfo.aspx</DependentUpon>
+    <Compile Include="WebForm1.aspx.designer.cs">
+      <DependentUpon>WebForm1.aspx</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\ucPager.ascx.cs">
-      <DependentUpon>ucPager.ascx</DependentUpon>
+    <Compile Include="WebForm2.aspx.cs">
+      <DependentUpon>WebForm2.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="UserControls\ucPager.ascx.designer.cs">
-      <DependentUpon>ucPager.ascx</DependentUpon>
+    <Compile Include="WebForm2.aspx.designer.cs">
+      <DependentUpon>WebForm2.aspx</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\ucPager2.ascx.cs">
-      <DependentUpon>ucPager2.ascx</DependentUpon>
+    <Compile Include="WebFormASJS.aspx.cs">
+      <DependentUpon>WebFormASJS.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="UserControls\ucPager2.ascx.designer.cs">
-      <DependentUpon>ucPager2.ascx</DependentUpon>
+    <Compile Include="WebFormASJS.aspx.designer.cs">
+      <DependentUpon>WebFormASJS.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Admin.Master" />
     <None Include="packages.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -152,16 +142,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\AccountingNote_Auth\AccountingNote_Auth.csproj">
-      <Project>{f7212f97-be6b-438f-99d7-063dec7372f5}</Project>
-      <Name>AccountingNote_Auth</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\AccountingNote_DBSoure\AccountingNote_DBSoure.csproj">
-      <Project>{c7f6f54b-8d4f-4e81-bd83-b0c4bc13678d}</Project>
-      <Name>AccountingNote_DBSoure</Name>
-    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -176,9 +156,9 @@
         <WebProjectProperties>
           <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>53909</DevelopmentServerPort>
+          <DevelopmentServerPort>61793</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:60433/</IISUrl>
+          <IISUrl>http://localhost:52708/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

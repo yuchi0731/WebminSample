@@ -1,6 +1,8 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="AccountingList.aspx.cs" Inherits="_0728_1.SystemAdmin.AccountingList" %>
 
-<%@ Register Src="~/UserControls/ucPager.ascx" TagPrefix="uc1" TagName="ucPager" %>
+
+<%@ Register Src="~/UserControls/ucPager2.ascx" TagPrefix="uc1" TagName="ucPager2" %>
+
 
 
 <!DOCTYPE html>
@@ -42,7 +44,8 @@
 
                                 </ItemTemplate>
                             </asp:TemplateField>
-                            <asp:BoundField DataField="CreateDate" DataFormatString="{0:yyyy-MM-dd}" HeaderText="建立日期" />          
+                            <asp:BoundField DataField="CreateDate" DataFormatString="{0:yyyy-MM-dd}" HeaderText="建立日期" />
+                            
                             <asp:TemplateField HeaderText="Act">
                                 <ItemTemplate>
                                     <a href="/SystemAdmin/AccountingDetail.aspx?ID=<%# Eval("ID") %>">Edit</a>
@@ -60,7 +63,11 @@
                         <SortedDescendingHeaderStyle BackColor="#00547E" />
                     </asp:GridView>
 
-                      <uc1:ucPager runat="server" id="ucPager" PageSize="10" CrrentPage="1" TotalSize="10" Url="AccountingList.aspx" />
+
+                    <div>
+                        <uc1:ucPager2 runat="server" id="ucPager2" PageSize="10" Url="/SystemAdmin/AccountingList.aspx" />
+                    </div>
+
 
                     <asp:PlaceHolder ID="plcNoData" runat="server" Visible="false">
                         <p style="color:red">

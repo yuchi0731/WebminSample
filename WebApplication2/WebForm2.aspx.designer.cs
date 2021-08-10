@@ -7,11 +7,11 @@
 // </自動產生的>
 //------------------------------------------------------------------------------
 
-namespace _0728_1.SystemAdmin
+namespace WebApplication2
 {
 
 
-    public partial class AccountingList
+    public partial class WebForm2
     {
 
         /// <summary>
@@ -24,39 +24,57 @@ namespace _0728_1.SystemAdmin
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
 
         /// <summary>
-        /// btnCreate 控制項。
+        /// ddlProduct 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnCreate;
+        protected global::System.Web.UI.WebControls.DropDownList ddlProduct;
 
         /// <summary>
-        /// gvAccountingList 控制項。
+        /// txtPrice 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView gvAccountingList;
+        protected global::System.Web.UI.WebControls.TextBox txtPrice;
 
         /// <summary>
-        /// ucPager2 控制項。
+        /// txtQuantity 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::WebApplication1.UserControls.ucPager2 ucPager2;
+        protected global::System.Web.UI.WebControls.TextBox txtQuantity;
 
         /// <summary>
-        /// plcNoData 控制項。
+        /// lblTotalPrice 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.PlaceHolder plcNoData;
+        protected global::System.Web.UI.WebControls.Label lblTotalPrice;
+
+        /// <summary>
+        /// btnSave 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnSave;
+
+        /// <summary>
+        /// lblMsg 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblMsg;
     }
 }

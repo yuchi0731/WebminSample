@@ -41,11 +41,14 @@ namespace _0728_1.SystemAdmin
                 
                 var dtPaged = this.GetPagedDataTable(dt);
 
+                this.ucPager2.TotalSize = dt.Rows.Count;
+                this.ucPager2.Bind();
+
+
                 this.gvAccountingList.DataSource = dtPaged;
                 this.gvAccountingList.DataBind();
 
-                this.ucPager.TotalSize = dt.Rows.Count;
-                this.ucPager.Bind();
+    
             }
             else
             {
@@ -78,6 +81,8 @@ namespace _0728_1.SystemAdmin
         private DataTable GetPagedDataTable(DataTable dt)
         {
             DataTable dtPaged = dt.Clone();
+            int pageSize = this.ucPager2.PageSize;
+
 
             int startIndex = (this.GetCurrentPage() - 1) * 10;
             int endIndex = (this.GetCurrentPage()) * 10;
