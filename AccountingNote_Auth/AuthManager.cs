@@ -35,10 +35,10 @@ namespace AccountingNote_Auth
             if (account == null)
                 return null;
 
-            DataRow dr = UserInfoManager.GetUserInfoByAccount(account);
+            var userUnfo = UserInfoManager.GetUserInfoByAccount(account);
 
 
-            if (dr == null) //一旦發現是空的就要清除資料
+            if (userUnfo == null) //一旦發現是空的就要清除資料
             {
                 HttpContext.Current.Session["UserLoginInfo"] = null;
                 return null;
@@ -46,10 +46,11 @@ namespace AccountingNote_Auth
 
             //因為dr設為取得使用者帳號的方法，所以可以取得對應的欄位
             UserInfoModel model = new UserInfoModel();
-            model.ID = dr["ID"].ToString();
-            model.Account = dr["Account"].ToString();
-            model.Name = dr["Name"].ToString();
-            model.Email = dr["Email"].ToString();
+            model.ID = userUnfo.ID;
+            model.Account = userUnfo.Account;
+            model.Name = userUnfo.Name;
+            model.Email = userUnfo.Email;
+            model.Phone = userUnfo.Phone;
 
 
             return model;
@@ -80,19 +81,19 @@ namespace AccountingNote_Auth
             }
 
             //read db and check
-            var dr = UserInfoManager.GetUserInfoByAccount(account);
+            var userInfo = UserInfoManager.GetUserInfoByAccount(account);
 
             //check null
-            if (dr == null)
+            if (userInfo == null)
             {
                 errorMsg = $"Account:{account} doesn't existi.";
                 return false;
             }
 
             //check account / pwd  Compare:比對前兩數值，第三參數為true不分大小寫，false表示區分大小寫
-            if (string.Compare(dr["Account"].ToString(), account, true) == 0 && string.Compare(dr["PWD"].ToString(), pwd, false) == 0)
+            if (string.Compare(userInfo.Account, account, true) == 0 && string.Compare(userInfo.PWD, pwd, false) == 0)
             {
-                HttpContext.Current.Session["UserLoginInfo"] = dr["Account"].ToString();
+                HttpContext.Current.Session["UserLoginInfo"] = userInfo.Account;
                 errorMsg = string.Empty;
                 return true;
             }

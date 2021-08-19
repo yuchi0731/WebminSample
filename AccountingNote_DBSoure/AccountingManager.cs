@@ -8,6 +8,7 @@ using System.Data;
 using System.Data.SqlClient;
 using AccountingNote_ORM.DBModel;
 
+
 namespace AccountingNote_DBSoure
 {
     public class AccountingManager
@@ -19,6 +20,11 @@ namespace AccountingNote_DBSoure
         //    return val;
         //}
 
+        /// <summary>
+        /// 查詢流水帳清單
+        /// </summary>
+        /// <param name="userID"></param>
+        /// <returns></returns>
         public static DataTable GetAccountingList(string userID)
         {
             string connStr = DBHelper.GetConnectionString();
@@ -49,6 +55,11 @@ namespace AccountingNote_DBSoure
             }
         }
 
+        /// <summary>
+        /// 查詢流水帳清單//強型別清單
+        /// </summary>
+        /// <param name="userID"></param>
+        /// <returns></returns>
         public static List<Accounting> GetAccountingList(Guid userID)
         {
             try
@@ -71,11 +82,43 @@ namespace AccountingNote_DBSoure
             }
         }
 
+        /// <summary>
+        /// 查詢流水帳//利用id查有沒有資料
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="userID"></param>
+        /// <returns></returns>
+        public static Accounting GetAccounting(int id, Guid userID)
+        {
+            try
+            {
+                using (ContextModel context = new ContextModel())
+                {
+                    var query =
+                        (from item in context.Accountings
+                         where item.ID == id && item.UserID == userID
+                         select item);
+
+                    var obj = query.FirstOrDefault();
+                    return obj;
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLog(ex);
+                return null;
+            }
+        }
 
 
 
-
-        public static DataRow GetAccounting(int id, string userID)//利用id查有沒有資料
+        /// <summary>
+        /// 查詢流水帳//利用id查有沒有資料
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="userID"></param>
+        /// <returns></returns>
+        public static DataRow GetAccounting(int id, string userID)
         {
             string connStr = DBHelper.GetConnectionString();
             string dbcommand =
@@ -109,10 +152,14 @@ namespace AccountingNote_DBSoure
 
         }
 
-
-
-
-
+        /// <summary>
+        /// 建立流水帳
+        /// </summary>
+        /// <param name="userID"></param>
+        /// <param name="caption"></param>
+        /// <param name="amount"></param>
+        /// <param name="actType"></param>
+        /// <param name="body"></param>
         public static void CreateAccounting(string userID, string caption, int amount, int actType, string body)
         {
             //<<<<check input
@@ -182,8 +229,95 @@ namespace AccountingNote_DBSoure
 
         }
 
+        /// <summary>
+        /// 建立流水帳
+        /// </summary>
+        /// <param name="userID"></param>
+        /// <param name="caption"></param>
+        /// <param name="amount"></param>
+        /// <param name="actType"></param>
+        /// <param name="body"></param>
+        public static void CreateAccounting(Accounting accounting)
+        {
+
+            //<<<<check input
+            if (accounting.Amount < 0 || accounting.Amount > 1000000)
+                throw new ArgumentException("Amount must between 0 and 1,000,000.");
+            if (accounting.ActType < 0 || accounting.ActType > 1)
+                throw new ArgumentException("actType must");
+            //check input>>>>>
+
+       
+
+            try
+            {
+                using (ContextModel context = new ContextModel())
+                {
+                    accounting.CreateDate = DateTime.Now;
+                    context.Accountings.Add(accounting);
+                    context.SaveChanges();
+                }
+            }
+
+            catch (Exception ex)
+            {
+                Logger.WriteLog(ex);
+            }
 
 
+        }
+        /// <summary>
+        /// LINQ修改流水帳
+        /// </summary>
+        /// <param name="ID"></param>
+        /// <param name="userID"></param>
+        /// <param name="caption"></param>
+        /// <param name="amount"></param>
+        /// <param name="actType"></param>
+        /// <param name="body"></param>
+        /// <returns></returns>
+        public static bool UpdateAccounting(Accounting accounting)
+        {
+            //<<<<check input
+            if (accounting.Amount < 0 || accounting.Amount > 1000000)
+                throw new ArgumentException("Amount must between 0 and 1,000,000.");
+            if (accounting.ActType < 0 || accounting.ActType > 1)
+                throw new ArgumentException("actType must");
+            //check input>>>>>
+
+            try
+            {
+                using (ContextModel context = new ContextModel())
+                {
+                    //連結DB查出資料
+                    var dbObject =
+                        context.Accountings.Where(obj => obj.ID == accounting.ID).FirstOrDefault();
+
+                    if(dbObject != null)//如果DB有資料的話
+                    {
+                        dbObject.Caption = accounting.Caption;
+                        dbObject.Body = accounting.Body;
+                        dbObject.Amount = accounting.Amount;
+                        dbObject.ActType = accounting.ActType;
+                        dbObject.CreateDate = DateTime.Now;
+
+                        context.SaveChanges();
+                      
+                    }                
+                }
+
+                return true;
+            }
+
+            catch (Exception ex)
+            {
+                Logger.WriteLog(ex);
+                return false;
+            }
+        }
+
+
+        
         public static bool UpdateAccounting(int ID, string userID, string caption, int amount, int actType, string body)
         {
             //<<<<check input
@@ -266,6 +400,7 @@ namespace AccountingNote_DBSoure
 
            
         }
+
         public static void DeleteAccountingforAjax(int ID, string userID)
         {
             string connStr = DBHelper.GetConnectionString();
@@ -293,6 +428,26 @@ namespace AccountingNote_DBSoure
 
         }
 
+        public static void DeleteAccounting_ORM(int ID)
+        {
+
+            try
+            {
+                using (ContextModel context = new ContextModel())
+                {
+                    var dbObject =
+                        context.Accountings.Where(obj => obj.ID == ID).FirstOrDefault();
+
+                    context.Accountings.Remove(dbObject);
+                    context.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLog(ex);
+            }
+
+        }
 
     }
 }

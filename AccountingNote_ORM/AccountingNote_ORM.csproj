@@ -50,7 +50,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AccountingNote_ORM_Manager.cs" />
     <Compile Include="DBModel\Accounting.cs" />
     <Compile Include="DBModel\ContextModel.cs" />
     <Compile Include="DBModel\UserInfo.cs" />
@@ -60,5 +59,6 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

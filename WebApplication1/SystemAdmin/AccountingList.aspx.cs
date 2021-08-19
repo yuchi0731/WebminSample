@@ -8,6 +8,7 @@ using AccountingNote_DBSoure;
 using System.Data;
 using System.Drawing;
 using AccountingNote_Auth;
+using AccountingNote_ORM.DBModel;
 
 namespace _0728_1.SystemAdmin
 {
@@ -34,21 +35,41 @@ namespace _0728_1.SystemAdmin
 
 
             //read accounting data
-            var dt = AccountingManager.GetAccountingList(currentUser.ID);
+            //var dt = AccountingManager.GetAccountingList(currentUser.ID);
+            var list = AccountingManager.GetAccountingList(currentUser.ID);//強型別清單
+            //if (dt.Rows.Count > 0) //check is empty data (大於0就做資料繫結)
+            //{
 
-            if (dt.Rows.Count > 0) //check is empty data (大於0就做資料繫結)
+            //    var dtPaged = this.GetPagedDataTable(dt);
+
+            //    this.ucPager2.TotalSize = dt.Rows.Count;
+            //    this.ucPager2.Bind();
+
+
+            //    this.gvAccountingList.DataSource = dtPaged;
+            //    this.gvAccountingList.DataBind();
+
+
+            //}
+            //else
+            //{
+            //    this.gvAccountingList.Visible = false;
+            //    this.plcNoData.Visible = true;
+            //}
+
+            //LINQ改寫
+            if (list.Count > 0) //check is empty data (大於0就做資料繫結)
             {
-                
-                var dtPaged = this.GetPagedDataTable(dt);
 
-                this.ucPager2.TotalSize = dt.Rows.Count;
+
+                var pageList = this.GetPageDataTable(list);
+                this.gvAccountingList.DataSource = pageList;
+                this.gvAccountingList.DataBind();
+                
+                this.ucPager2.TotalSize = list.Count;
                 this.ucPager2.Bind();
 
 
-                this.gvAccountingList.DataSource = dtPaged;
-                this.gvAccountingList.DataBind();
-
-    
             }
             else
             {
@@ -59,6 +80,8 @@ namespace _0728_1.SystemAdmin
 
         }
 
+
+       
 
 
         private int GetCurrentPage()
@@ -76,6 +99,13 @@ namespace _0728_1.SystemAdmin
                 return 1;
 
             return intPage;
+        }
+
+        private List<Accounting> GetPageDataTable(List<Accounting> list)
+        {
+            int startIndex = (this.GetCurrentPage() - 1) * 10;
+            return list.Skip(startIndex).Take(10).ToList();
+
         }
 
         private DataTable GetPagedDataTable(DataTable dt)
@@ -123,9 +153,12 @@ namespace _0728_1.SystemAdmin
                 Label lbl = row.FindControl("lblActType") as Label;
 
 
-                var dr = row.DataItem as DataRowView; //DataItem本身是object要轉型別
-                int actType = dr.Row.Field<int>("ActType");
+                //var dr = row.DataItem as DataRowView; //DataItem本身是object要轉型別
+                //int actType = dr.Row.Field<int>("ActType");
 
+                //改強型別list取得資料
+                var rowData = row.DataItem as Accounting;
+                int actType = rowData.ActType;
 
                 if (actType == 0)
                 {
@@ -138,7 +171,7 @@ namespace _0728_1.SystemAdmin
                     lbl.Text = "收入";
                 }
 
-                if (dr.Row.Field<int>("Amount") > 1500)
+                if (rowData.Amount > 1500)
                 {
                     lbl.ForeColor = Color.Red;
 

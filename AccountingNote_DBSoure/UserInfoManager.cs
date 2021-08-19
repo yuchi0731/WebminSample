@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-
-
+using AccountingNote_ORM.DBModel;
 
 namespace AccountingNote_DBSoure
 {
@@ -21,7 +20,7 @@ namespace AccountingNote_DBSoure
         //}
 
 
-        public static DataRow GetUserInfoByAccount(string account)
+        public static DataRow GetUserInfoByAccount_SQL(string account)
         {
             string connectionString = DBHelper.GetConnectionString();
 
@@ -79,5 +78,28 @@ namespace AccountingNote_DBSoure
             //}
         }
 
+
+        public static UserInfo GetUserInfoByAccount(string account)
+        {
+
+            try
+            {
+                using (ContextModel context = new ContextModel())
+                {
+                    var query =
+                        (from item in context.UserInfoes
+                         where item.Account == account
+                         select item);
+
+                    var obj = query.FirstOrDefault();
+                    return obj;
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLog(ex);
+                return null;
+            }
+        }
     }
 }

@@ -1,9 +1,11 @@
 ﻿using AccountingNote_DBSoure;
+using AccountingNote_ORM.DBModel;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Web;
+using WebApplication1.Extensions;
 using WebApplication1.Handlers.Models;
 
 namespace WebApplication1.Handlers
@@ -63,12 +65,21 @@ namespace WebApplication1.Handlers
                     return;
                 }
 
+                // 建立流水帳
                 try
                 {
+                    Accounting accounting = new Accounting()
+                    {
+                        UserID = id.ToGuid(),
+                        Caption = caption,
+                        Body = body,
+                        Amount = tempAmount,
+                        ActType = tempActType,
+                    };
 
-               
-                //建立流水帳
-                AccountingManager.CreateAccounting(id, caption, tempAmount, tempActType, body);
+                    AccountingManager.CreateAccounting(accounting);
+
+                //AccountingManager.CreateAccounting(id, caption, tempAmount, tempActType, body);
 
                 context.Response.ContentType = "text/plain";
                 context.Response.Write("create ok");
@@ -166,6 +177,28 @@ namespace WebApplication1.Handlers
                 context.Response.Write("delete ok");
             }
 
+            else if (actionName == "list" || actionName == "List")
+            {
+                Guid userGUID = new Guid("67e458c2-3f11-4e7b-a946-220a0bf3bc02");
+
+                List<Accounting> sourcelist = AccountingManager.GetAccountingList(userGUID);
+                List<AccountingNoteViewModel> list =
+                    sourcelist.Select(obj => new AccountingNoteViewModel()
+                    {
+                        ID = obj.ID,
+                        Caption = obj.Caption.ToString(),
+                        Amount = obj.Amount,
+                        ActType = (obj.ActType == 0) ? "支出" : "收入",
+                        CreateDate = obj.CreateDate.ToString("yyyy-MM-dd")
+                    }).ToList();
+
+
+               string jsonText = Newtonsoft.Json.JsonConvert.SerializeObject(list);
+
+                context.Response.ContentType = "application/json";
+                context.Response.Write(jsonText);
+
+            }
 
             else if (actionName == "query"|| actionName == "Query")//查詢單筆
             {
@@ -174,9 +207,13 @@ namespace WebApplication1.Handlers
                 int.TryParse(idText, out id);
                 string userID = "67e458c2-3f11-4e7b-a946-220a0bf3bc02";
 
-                var drAccounting = AccountingManager.GetAccounting(id, userID);
+                Guid userGUID = new Guid("67e458c2-3f11-4e7b-a946-220a0bf3bc02");
 
-                if (drAccounting == null)
+                var accounting = AccountingManager.GetAccounting(id, userGUID);
+
+                //var drAccounting = AccountingManager.GetAccounting(id, userID);
+
+                if (accounting == null)
                 {
                     context.Response.StatusCode = 404;
                     context.Response.ContentType = "text/plain";
@@ -186,53 +223,53 @@ namespace WebApplication1.Handlers
                 }
 
 
-                AccountingNoteViewModel model = new AccountingNoteViewModel()
+                List<Accounting> sourcelist = AccountingManager.GetAccountingList(userGUID);
+                List<AccountingNoteViewModel> list =
+                    sourcelist.Select(obj => new AccountingNoteViewModel()
                 {
-                    ID = drAccounting["ID"].ToString(),
-                    Caption = drAccounting["Caption"].ToString(),
-                    Body = drAccounting["Body"].ToString(),
-                    CreateDate = drAccounting.Field<DateTime>("CreateDate").ToString("yyyy-MM-dd"),
-                    ActType = drAccounting.Field<int>("ActType").ToString(),
-                    Amount = drAccounting.Field<int>("Amount")
-
-                };
-
-                string jsonText = Newtonsoft.Json.JsonConvert.SerializeObject(model);
-                context.Response.ContentType = "application/json";
-                context.Response.Write(jsonText);
-
-            }
-
-
-            else if (actionName == "list"|| actionName == "List")//查詢清單
-            {
-                string userID = "67e458c2-3f11-4e7b-a946-220a0bf3bc02";
-
-                DataTable dataTable = AccountingManager.GetAccountingList(userID);
-                //拿來做序列化
-
-                List<AccountingNoteViewModel> list = new List<AccountingNoteViewModel>();
-                foreach (DataRow drAccounting in dataTable.Rows)
-                {
-                    AccountingNoteViewModel model = new AccountingNoteViewModel()
-                    {
-                        ID = drAccounting["ID"].ToString(),
-                        Caption = drAccounting["Caption"].ToString(),
-                        Amount = drAccounting.Field<int>("Amount"),
-                        ActType = (drAccounting.Field<int>("ActType") == 0) ? "支出" : "收入",
-                        CreateDate = drAccounting.Field<DateTime>("CreateDate").ToString("yyyy-MM-dd")
-
-                    };
-                    list.Add(model);
-                }
-
+                    ID = obj.ID,
+                    Caption = obj.Caption.ToString(),
+                    Amount = obj.Amount,
+                    ActType = (obj.ActType == 0) ? "支出" : "收入",
+                    CreateDate = obj.CreateDate.ToString("yyyy-MM-dd")
+                }).ToList();
 
                 string jsonText = Newtonsoft.Json.JsonConvert.SerializeObject(list);
-
                 context.Response.ContentType = "application/json";
                 context.Response.Write(jsonText);
 
             }
+
+
+            //else if (actionName == "list"|| actionName == "List")//查詢清單
+            //{
+            //    string userID = "67e458c2-3f11-4e7b-a946-220a0bf3bc02";
+
+            //    DataTable dataTable = AccountingManager.GetAccountingList(userID);
+            //    //拿來做序列化
+
+            //    List<AccountingNoteViewModel> list = new List<AccountingNoteViewModel>();
+            //    foreach (DataRow drAccounting in dataTable.Rows)
+            //    {
+            //        AccountingNoteViewModel model = new AccountingNoteViewModel()
+            //        {
+            //            ID = drAccounting.Field<int>("ID"),
+            //            Caption = drAccounting["Caption"].ToString(),
+            //            Amount = drAccounting.Field<int>("Amount"),
+            //            ActType = (drAccounting.Field<int>("ActType") == 0) ? "支出" : "收入",
+            //            CreateDate = drAccounting.Field<DateTime>("CreateDate").ToString("yyyy-MM-dd")
+
+            //        };
+            //        list.Add(model);
+            //    }
+
+
+            //    string jsonText = Newtonsoft.Json.JsonConvert.SerializeObject(list);
+
+            //    context.Response.ContentType = "application/json";
+            //    context.Response.Write(jsonText);
+
+            //}
 
         }
 
@@ -253,7 +290,7 @@ namespace WebApplication1.Handlers
             {
                 AccountingNoteViewModel model = new AccountingNoteViewModel()
                 {
-                    ID = drAccounting["ID"].ToString(),
+                    ID = drAccounting.Field<int>("ID"),
                     Caption = drAccounting["Caption"].ToString(),
                     Amount = drAccounting.Field<int>("Amount"),
                     ActType = (drAccounting.Field<int>("ActType") == 0) ? "支出" : "收入",

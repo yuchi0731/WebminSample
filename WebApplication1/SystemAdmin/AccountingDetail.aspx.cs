@@ -6,6 +6,8 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using AccountingNote_Auth;
 using AccountingNote_DBSoure;
+using AccountingNote_ORM.DBModel;
+using WebApplication1.Extensions;
 
 namespace _0728_1.SystemAdmin
 {
@@ -38,13 +40,15 @@ namespace _0728_1.SystemAdmin
                 else
                 {
 
+                    this.btnDelete.Visible = true;
+
                     string idText = this.Request.QueryString["ID"];
                     int id;
                     if (int.TryParse(idText, out id))//檢查能不能轉型成數字
                     {
-                        var drAccounting = AccountingManager.GetAccounting(id, currentUser.ID); //查id有沒有//並多加一項目確認是否為自己資料而不會窺看得以別的使用者資料
+                        var accounting = AccountingManager.GetAccounting(id, currentUser.ID); //查id有沒有//並多加一項目確認是否為自己資料而不會窺看得以別的使用者資料
 
-                        if (drAccounting == null)
+                        if (accounting == null)
                         {
                             this.ltMsg.Text = "Data doesn't exist.";
                             this.btnSave.Visible = false;
@@ -56,10 +60,10 @@ namespace _0728_1.SystemAdmin
                             //   if (drUserInfo["UserID"] == drUserInfo["ID"]) //另一種保護資料不被窺看的方法//寫錯  改一下
                             //{ 
                             //如果查得出來就把值放入控制項
-                            this.ddlActType.SelectedValue = drAccounting["ActType"].ToString();
-                            this.txtAmount.Text = drAccounting["Amount"].ToString();
-                            this.txtCaption.Text = drAccounting["Caption"].ToString();
-                            this.txtDesc.Text = drAccounting["Body"].ToString();
+                            this.ddlActType.SelectedValue = accounting.ActType.ToString();
+                            this.txtAmount.Text = accounting.Amount.ToString();
+                            this.txtCaption.Text = accounting.Caption;
+                            this.txtDesc.Text = accounting.Body;
                             //}
                         }
                     }
@@ -96,7 +100,7 @@ namespace _0728_1.SystemAdmin
             }
 
 
-            string userID = currentUser.ID;
+            
             string caption = this.txtCaption.Text;
             string amountText = this.txtAmount.Text;
             string actTypeText = this.ddlActType.SelectedValue;
@@ -106,10 +110,20 @@ namespace _0728_1.SystemAdmin
             int actType = Convert.ToInt32(actTypeText);
 
             string idText = this.Request.QueryString["ID"];
+
+            Accounting accounting = new Accounting()
+            {
+                UserID = currentUser.ID,
+                ActType = actType,
+                Amount = amount,
+                Caption = this.txtCaption.Text,
+                Body = this.txtDesc.Text,
+
+            };
+
             if (string.IsNullOrWhiteSpace(idText))
             {
-                //Execute 'Insert into db'
-                AccountingManager.CreateAccounting(userID, caption, amount, actType, body);
+                AccountingManager.CreateAccounting(accounting);
             }
 
             else
@@ -117,10 +131,22 @@ namespace _0728_1.SystemAdmin
                 int id;
                 if (int.TryParse(idText, out id))
                 {
-                    //Execute 'Update db'//如果今天是修改，如何拿到使用者id
-                    AccountingManager.UpdateAccounting(id, userID, caption, amount, actType, body);
-                }
+                    accounting.ID = id;
+                };
+                    AccountingManager.UpdateAccounting(accounting);
+                
             }
+
+
+            //else
+            //{
+            //    int id;
+            //    if (int.TryParse(idText, out id))
+            //    {
+            //        //Execute 'Update db'//如果今天是修改，如何拿到使用者id
+            //        AccountingManager.UpdateAccounting(id, userID, caption, amount, actType, body);
+            //    }
+            //}
 
             Response.Redirect("/SystemAdmin/AccountingList.aspx");
 
@@ -182,7 +208,7 @@ namespace _0728_1.SystemAdmin
             if (int.TryParse(idText, out id))
             {
                 //Execute 'delete db'
-                AccountingManager.DeleteAccounting(id);
+                AccountingManager.DeleteAccounting_ORM(id);
             }
 
             Response.Redirect("/SystemAdmin/AccountingList.aspx");
