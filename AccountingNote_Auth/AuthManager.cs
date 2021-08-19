@@ -50,7 +50,7 @@ namespace AccountingNote_Auth
             model.Account = userUnfo.Account;
             model.Name = userUnfo.Name;
             model.Email = userUnfo.Email;
-            model.Phone = userUnfo.Phone;
+            model.MobilePhone = userUnfo.MobilePhone;
 
 
             return model;

@@ -16,7 +16,7 @@ namespace AccountingNote_Auth
         public string Name { get; set; }
         public string Email { get; set; }
 
-        public string Phone { get; set; }
+        public string MobilePhone { get; set; }
 
 
         //public Guid UserGuid//因為ID型別改成Guid，用不到了

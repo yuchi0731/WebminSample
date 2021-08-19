@@ -8,7 +8,7 @@ namespace AccountingNote_ORM.DBModel
     public partial class ContextModel : DbContext
     {
         public ContextModel()
-            : base("name=DefaultConnectionString")
+            : base("name=ContextModel")
         {
         }
 
@@ -26,7 +26,7 @@ namespace AccountingNote_ORM.DBModel
                 .IsUnicode(false);
 
             modelBuilder.Entity<UserInfo>()
-                .Property(e => e.Phone)
+                .Property(e => e.MobilePhone)
                 .IsUnicode(false);
         }
     }
