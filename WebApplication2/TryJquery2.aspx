@@ -22,12 +22,12 @@
 <body>
     <form id="form1" runat="server">
         <div>
-                  <p>If you click on me, I will disappear.</p>
-            <p  class="pp">Click me away!</p>
-            <p  class="pp">Click me away!</p>
-            <p  class="pp">Click me away!</p>
-            <p  class="pp">Click me away!</p>
-            <p  class="pp"  id="p1">Click me too!</p>
+            <p>If you click on me, I will disappear.</p>
+            <p class="pp">Click me away!</p>
+            <p class="pp">Click me away!</p>
+            <p class="pp">Click me away!</p>
+            <p class="pp">Click me away!</p>
+            <p class="pp"  id="p1">Click me too!</p>
 
           <input  type="text" id="txt1" />
           <button  type="button" id="btn1">Click Me</button>

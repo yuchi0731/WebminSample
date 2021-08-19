@@ -44,6 +44,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -67,8 +70,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="AjaxAccountingNote.aspx" />
     <Content Include="Default.aspx" />
     <Content Include="Global.asax" />
+    <Content Include="Images\2922458.png" />
     <Content Include="Login.aspx" />
     <Content Include="SystemAdmin\AccountingDetail.aspx" />
     <Content Include="SystemAdmin\AccountingList.aspx" />
@@ -85,6 +90,13 @@
     <Compile Include="Admin.Master.designer.cs">
       <DependentUpon>Admin.Master</DependentUpon>
     </Compile>
+    <Compile Include="AjaxAccountingNote.aspx.cs">
+      <DependentUpon>AjaxAccountingNote.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AjaxAccountingNote.aspx.designer.cs">
+      <DependentUpon>AjaxAccountingNote.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -95,6 +107,16 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Handlers\AccountingNoteHandler.ashx.cs">
+      <DependentUpon>AccountingNoteHandler.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="Handlers\AccountingNoteList.ashx.cs">
+      <DependentUpon>AccountingNoteList.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="Handlers\CreateAccountingNote.ashx.cs">
+      <DependentUpon>CreateAccountingNote.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="Handlers\Models\AccountingNoteViewModel.cs" />
     <Compile Include="Login.aspx.cs">
       <DependentUpon>Login.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -141,6 +163,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Admin.Master" />
+    <Content Include="Handlers\AccountingNoteList.ashx" />
+    <Content Include="Handlers\CreateAccountingNote.ashx" />
+    <Content Include="Handlers\AccountingNoteHandler.ashx" />
     <None Include="packages.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -161,6 +186,10 @@
     <ProjectReference Include="..\AccountingNote_DBSoure\AccountingNote_DBSoure.csproj">
       <Project>{c7f6f54b-8d4f-4e81-bd83-b0c4bc13678d}</Project>
       <Name>AccountingNote_DBSoure</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AccountingNote_ORM\AccountingNote_ORM.csproj">
+      <Project>{f6cccfd3-cf12-46d4-b6a5-cad30b0be280}</Project>
+      <Name>AccountingNote_ORM</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

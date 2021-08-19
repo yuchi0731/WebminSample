@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data;
 using System.Data.SqlClient;
-
+using AccountingNote_ORM.DBModel;
 
 namespace AccountingNote_DBSoure
 {
@@ -49,6 +49,30 @@ namespace AccountingNote_DBSoure
             }
         }
 
+        public static List<Accounting> GetAccountingList(Guid userID)
+        {
+            try
+            {
+                using (ContextModel context = new ContextModel())
+                {
+                    var query =
+                        (from item in context.Accountings
+                         where item.UserID == userID
+                         select item);
+
+                    var list = query.ToList();
+                    return list;
+                }
+            }
+            catch(Exception ex)
+            {
+                Logger.WriteLog(ex);
+                return null;
+            }
+        }
+
+
+
 
 
         public static DataRow GetAccounting(int id, string userID)//利用id查有沒有資料
@@ -87,6 +111,8 @@ namespace AccountingNote_DBSoure
 
 
 
+
+
         public static void CreateAccounting(string userID, string caption, int amount, int actType, string body)
         {
             //<<<<check input
@@ -95,6 +121,14 @@ namespace AccountingNote_DBSoure
             if (actType < 0 || actType > 1)
                 throw new ArgumentException("actType must");
             //check input>>>>>
+
+            string bodyColumnSQL = "";
+            string bodyValueSQL = "";
+            if(!string.IsNullOrWhiteSpace(body))
+            {
+                bodyColumnSQL = ", Body";
+                bodyValueSQL = ", @Body";
+            }
 
 
             string connStr = DBHelper.GetConnectionString();
@@ -106,7 +140,7 @@ namespace AccountingNote_DBSoure
                    ,Amount
                    ,ActType
                    ,CreateDate
-                   ,Body
+                   {bodyColumnSQL}
                 )
                  VALUES
                 (
@@ -115,7 +149,7 @@ namespace AccountingNote_DBSoure
                    ,@amount
                    ,@actType
                    ,@createDate
-                   ,@body
+                   {bodyValueSQL}
                 )
                 ";
 
@@ -125,7 +159,11 @@ namespace AccountingNote_DBSoure
             createlist.Add(new SqlParameter("@amount", amount));
             createlist.Add(new SqlParameter("@actType", actType));
             createlist.Add(new SqlParameter("@createDate", DateTime.Now));
+            
+            if (!string.IsNullOrWhiteSpace(body))
+            {
             createlist.Add(new SqlParameter("@body", body));
+            }
 
             try
             {
@@ -227,6 +265,32 @@ namespace AccountingNote_DBSoure
             }
 
            
+        }
+        public static void DeleteAccountingforAjax(int ID, string userID)
+        {
+            string connStr = DBHelper.GetConnectionString();
+            string dbcommand =
+                $@" DELETE [dbo].[Accounting]
+                WHERE ID = @id
+                ";
+
+            List<SqlParameter> paramlist = new List<SqlParameter>();
+            paramlist.Add(new SqlParameter("@id", ID));
+            paramlist.Add(new SqlParameter("@userID", userID));
+
+
+            try
+            {
+                DBHelper.ModifyData(connStr, dbcommand, paramlist);
+
+            }
+
+            catch (Exception ex)
+            {
+                Logger.WriteLog(ex);
+            }
+
+
         }
 
 
