@@ -300,6 +300,7 @@ namespace AccountingNote_DBSoure
                         dbObject.Amount = accounting.Amount;
                         dbObject.ActType = accounting.ActType;
                         dbObject.CreateDate = DateTime.Now;
+                        dbObject.CoverImage = accounting.CoverImage;
 
                         context.SaveChanges();
                       

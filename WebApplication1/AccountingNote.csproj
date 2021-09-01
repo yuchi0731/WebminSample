@@ -125,6 +125,7 @@
       <DependentUpon>CreateAccountingNote.ashx</DependentUpon>
     </Compile>
     <Compile Include="Handlers\Models\AccountingNoteViewModel.cs" />
+    <Compile Include="Helper\FileHelper.cs" />
     <Compile Include="Login.aspx.cs">
       <DependentUpon>Login.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -184,6 +185,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="FileDownload\Accounting\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>

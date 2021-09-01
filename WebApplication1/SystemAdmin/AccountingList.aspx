@@ -48,6 +48,13 @@
                             
                             <asp:TemplateField HeaderText="Act">
                                 <ItemTemplate>
+                                   <%-- <asp:Image ID="imgCover" runat="server" width="80" Height="50" Visible='<%# Eval("CoverImage")!=null %>'  ImageUrl='<%# "../FileDownload/Accounting/" + Eval("CoverImage") %>'/>--%>
+                                   <!-- 只是空字串判斷寫這邊就好
+                                    較為複雜  就在程式碼內處理-->
+
+
+                                    <asp:Image ID="imgCover" runat="server" Visible="false" Width="80" Height="50" />
+
                                     <a href="/SystemAdmin/AccountingDetail.aspx?ID=<%# Eval("ID") %>">Edit</a>
                                 </ItemTemplate>
                             </asp:TemplateField>                    

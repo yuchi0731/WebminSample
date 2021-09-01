@@ -38,6 +38,8 @@
                     Desc:
                     <asp:TextBox ID="txtDesc" runat="server" TextMode="MultiLine"></asp:TextBox>
                     <br/>
+                    <asp:FileUpload ID="fileCover" runat="server" /><br/>
+  
                     <asp:Button ID="btnSave" runat="server" Text="Save" OnClick="btnSave_Click" />   
                     <asp:Button ID="btnDelete" runat="server" Text="Delete" OnClick="btnDelete_Click" />
                     <br/>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -8,6 +9,7 @@ using AccountingNote_Auth;
 using AccountingNote_DBSoure;
 using AccountingNote_ORM.DBModel;
 using WebApplication1.Extensions;
+using WebApplication1.Helper;
 
 namespace _0728_1.SystemAdmin
 {
@@ -121,6 +123,20 @@ namespace _0728_1.SystemAdmin
 
             };
 
+
+            //假設有上傳檔案，就寫入檔名
+            if(this.fileCover.HasFile && FileHelper.VaildFileUpload(this.fileCover, out List<string> tempList))
+            {
+                string saveFileName = FileHelper.GetNewFileName(this.fileCover);
+                string filePath = Path.Combine(this.GetSaveFolderPath(), saveFileName);
+                this.fileCover.SaveAs(filePath);
+
+                accounting.CoverImage = saveFileName;
+
+            }
+
+
+
             if (string.IsNullOrWhiteSpace(idText))
             {
                 AccountingManager.CreateAccounting(accounting);
@@ -213,6 +229,11 @@ namespace _0728_1.SystemAdmin
 
             Response.Redirect("/SystemAdmin/AccountingList.aspx");
 
+        }
+
+        private string GetSaveFolderPath()
+        {
+            return Server.MapPath("~/FileDownload/Accounting");
         }
     }
 }

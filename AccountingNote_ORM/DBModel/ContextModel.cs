@@ -17,6 +17,10 @@ namespace AccountingNote_ORM.DBModel
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Accounting>()
+                .Property(e => e.CoverImage)
+                .IsUnicode(false);
+
             modelBuilder.Entity<UserInfo>()
                 .Property(e => e.Account)
                 .IsUnicode(false);

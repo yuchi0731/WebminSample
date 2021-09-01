@@ -9,6 +9,7 @@ using System.Data;
 using System.Drawing;
 using AccountingNote_Auth;
 using AccountingNote_ORM.DBModel;
+using Image = System.Web.UI.WebControls.Image;
 
 namespace _0728_1.SystemAdmin
 {
@@ -151,6 +152,7 @@ namespace _0728_1.SystemAdmin
             {
                 //Literal ltl = row.FindControl("ltActType") as Literal;
                 Label lbl = row.FindControl("lblActType") as Label;
+                Image img = row.FindControl("imgCover") as Image;
 
 
                 //var dr = row.DataItem as DataRowView; //DataItem本身是object要轉型別
@@ -174,8 +176,15 @@ namespace _0728_1.SystemAdmin
                 if (rowData.Amount > 1500)
                 {
                     lbl.ForeColor = Color.Red;
-
                 }
+
+                //若是欄位的照片imgCover不為空的話就輸出照片
+                if (!string.IsNullOrEmpty(rowData.CoverImage))
+                {
+                    img.Visible = true;
+                    img.ImageUrl = "../FileDownload/Accounting/" + rowData.CoverImage;
+                }
+
             }
         }
 
